@@ -18,13 +18,14 @@ public class Specialization extends CommonEntity {
     private String specialization;
 
     // Doctor Profile
-    @OneToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JoinColumn(name = "doctor_id")
-    @JsonBackReference
+    @ManyToMany(mappedBy = "specializations", fetch = FetchType.LAZY)
     private DoctorProfile doctorProfile;
 
     public Specialization() {
+    }
+
+    public Specialization(String specialization) {
+        this.specialization = specialization;
     }
 
     public Specialization(String specialization, DoctorProfile doctorProfile) {

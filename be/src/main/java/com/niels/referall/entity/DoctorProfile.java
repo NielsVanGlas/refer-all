@@ -1,10 +1,9 @@
 package com.niels.referall.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.niels.referall.entity.extra.CommonEntity;
 import com.niels.referall.util.Encryptor;
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,9 +16,20 @@ public class DoctorProfile extends CommonEntity {
     @Convert(converter = Encryptor.class)
     private String licenseNumber;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "doctor_specialization",
+            joinColumns = @JoinColumn(name = "doctor_id"),
+            inverseJoinColumns = @JoinColumn(name = "specialization_id")
+    )
+    @JsonBackReference
     private List<Specialization> specializations;
 
     public DoctorProfile() {
+    }
+
+    public DoctorProfile(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
     }
 
     public DoctorProfile(String licenseNumber, List<Specialization> specializations) {

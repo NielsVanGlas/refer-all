@@ -2,6 +2,7 @@ package com.niels.referall.service.impl;
 
 import com.niels.referall.config.exception.ValidationException;
 import com.niels.referall.dto.doctorProfile.CreateDoctorProfileDto;
+import com.niels.referall.dto.specialization.UpdateSpecializationDto;
 import com.niels.referall.entity.DoctorProfile;
 import com.niels.referall.entity.Specialization;
 import com.niels.referall.factory.DoctorProfileFactory;
@@ -40,6 +41,13 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
     @Override
     public void deleteDoctorProfile(UUID id) {
         doctorProfileRepository.deleteById(id);
+    }
+
+    @Override
+    public DoctorProfile updateDoctorSpecializations(String licenseNumber, List<UpdateSpecializationDto> specializations) {
+        DoctorProfile doctorProfile = doctorProfileRepository.findByLicenseNumber(licenseNumber);
+        doctorProfile.setSpecializations(specializationService.updateSpecialization(specializations));
+        return doctorProfileRepository.saveAndFlush(doctorProfile);
     }
 
 }

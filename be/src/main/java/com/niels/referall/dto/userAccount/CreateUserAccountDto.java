@@ -2,6 +2,7 @@ package com.niels.referall.dto.userAccount;
 
 import com.niels.referall.dto.address.CreateAddressDto;
 import com.niels.referall.dto.doctorProfile.CreateDoctorProfileDto;
+import com.niels.referall.dto.patientProfile.CreatePatientProfileDto;
 import com.niels.referall.enumerate.DocumentType;
 import com.niels.referall.enumerate.Gender;
 
@@ -43,6 +44,9 @@ public class CreateUserAccountDto {
     // Doctor Profile
     private CreateDoctorProfileDto doctorProfile;
 
+    // Patient Profile
+    private CreatePatientProfileDto patientProfile;
+
     // Constructors
     public CreateUserAccountDto() {
     }
@@ -65,7 +69,28 @@ public class CreateUserAccountDto {
         this.documentId = documentId;
     }
 
-    public CreateUserAccountDto(String password, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, CreateAddressDto residence, CreateAddressDto home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, CreateDoctorProfileDto doctorProfile) {
+    public CreateUserAccountDto(String password, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, CreateAddressDto residence, CreateAddressDto home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, CreatePatientProfileDto patientProfile) {
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.bornDate = bornDate;
+        this.birthCity = birthCity;
+        this.birthProvinceCode = birthProvinceCode;
+        this.birthZipCode = birthZipCode;
+        this.taxCode = taxCode;
+        this.email = email;
+        this.mobile = mobile;
+        this.residence = residence;
+        this.home = home;
+        this.marketingConsensus = marketingConsensus;
+        this.serviceTermsAndConditions = serviceTermsAndConditions;
+        this.documentType = documentType;
+        this.documentId = documentId;
+        this.patientProfile = patientProfile;
+    }
+
+    public CreateUserAccountDto(String password, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, CreateAddressDto residence, CreateAddressDto home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, CreateDoctorProfileDto doctorProfile, CreatePatientProfileDto patientProfile) {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -84,6 +109,7 @@ public class CreateUserAccountDto {
         this.documentType = documentType;
         this.documentId = documentId;
         this.doctorProfile = doctorProfile;
+        this.patientProfile = patientProfile;
     }
 
     // Getters and Setters
@@ -229,5 +255,13 @@ public class CreateUserAccountDto {
 
     public void setDoctorProfile(CreateDoctorProfileDto doctorProfile) {
         this.doctorProfile = doctorProfile;
+    }
+
+    public CreatePatientProfileDto getPatientProfile() {
+        return patientProfile;
+    }
+
+    public void setPatientProfile(CreatePatientProfileDto patientProfile) {
+        this.patientProfile = patientProfile;
     }
 }

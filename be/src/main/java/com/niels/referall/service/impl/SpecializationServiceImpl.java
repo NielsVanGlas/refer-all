@@ -2,6 +2,7 @@ package com.niels.referall.service.impl;
 
 import com.niels.referall.dto.specialization.CreateSpecializationDto;
 import com.niels.referall.dto.specialization.ShowSpecializationDto;
+import com.niels.referall.dto.specialization.UpdateSpecializationDto;
 import com.niels.referall.entity.Specialization;
 import com.niels.referall.factory.SpecializationFactory;
 import com.niels.referall.repository.SpecializationRepository;
@@ -21,6 +22,20 @@ public class SpecializationServiceImpl implements SpecializationService {
 
     @Autowired
     private SpecializationRepository specializationRepository;
+
+    @Override
+    public List<Specialization> updateSpecialization(List<UpdateSpecializationDto> dtos) {
+        HashMap<String, Specialization> specializationMap = new HashMap<>();
+        specializationRepository.findAll().forEach(specialization -> {
+            specializationMap.put(specialization.getSpecialization(), specialization);
+        });
+        List<Specialization> specializations = new ArrayList<>();
+        dtos.forEach(specialization -> {
+            String key = specialization.getSpecialization();
+            specializations.add(specializationMap.containsKey(key) ? specializationMap.get(key) : specializationRepository.saveAndFlush(new Specialization(key)));
+        });
+        return specializations;
+    }
 
     @Override
     public List<Specialization> getOrCreateSpecializations(List<CreateSpecializationDto> dtos) {

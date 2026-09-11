@@ -10,6 +10,7 @@ import com.niels.referall.enumerate.converter.GenderConverter;
 import com.niels.referall.enumerate.converter.RoleConverter;
 import com.niels.referall.util.Encryptor;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
@@ -106,6 +107,13 @@ public class UserAccount extends CommonEntity implements UserDetails {
     @Convert(converter = Encryptor.class)
     private String documentId;
 
+    // Patient Profile
+    @OneToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "patient_id", referencedColumnName = "id", nullable = false)
+    @NotNull
+    private PatientProfile patientProfile;
+
     // Doctor Profile
     @OneToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -116,7 +124,7 @@ public class UserAccount extends CommonEntity implements UserDetails {
     public UserAccount() {
     }
 
-    public UserAccount(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean enabled, String password, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, Address residence, Address home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, DoctorProfile doctorProfile) {
+    public UserAccount(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean enabled, String password, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, Address residence, Address home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, DoctorProfile doctorProfile, PatientProfile patientProfile) {
         super(id, createdAt, updatedAt);
         this.enabled = enabled;
         this.password = password;
@@ -138,9 +146,33 @@ public class UserAccount extends CommonEntity implements UserDetails {
         this.documentType = documentType;
         this.documentId = documentId;
         this.doctorProfile = doctorProfile;
+        this.patientProfile = patientProfile;
     }
 
-    public UserAccount(boolean enabled, String password, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, Address residence, Address home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, DoctorProfile doctorProfile) {
+    public UserAccount(boolean enabled, String password, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, Address residence, Address home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, PatientProfile patientProfile) {
+        this.enabled = enabled;
+        this.password = password;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.bornDate = bornDate;
+        this.birthCity = birthCity;
+        this.birthProvinceCode = birthProvinceCode;
+        this.birthZipCode = birthZipCode;
+        this.taxCode = taxCode;
+        this.email = email;
+        this.mobile = mobile;
+        this.residence = residence;
+        this.home = home;
+        this.marketingConsensus = marketingConsensus;
+        this.serviceTermsAndConditions = serviceTermsAndConditions;
+        this.documentType = documentType;
+        this.documentId = documentId;
+        this.patientProfile = patientProfile;
+    }
+
+    public UserAccount(boolean enabled, String password, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, Address residence, Address home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, DoctorProfile doctorProfile, PatientProfile patientProfile) {
         this.enabled = enabled;
         this.password = password;
         this.role = role;
@@ -161,6 +193,7 @@ public class UserAccount extends CommonEntity implements UserDetails {
         this.documentType = documentType;
         this.documentId = documentId;
         this.doctorProfile = doctorProfile;
+        this.patientProfile = patientProfile;
     }
 
     // Getters and Setters
@@ -338,5 +371,13 @@ public class UserAccount extends CommonEntity implements UserDetails {
 
     public String getFullName() {
         return getFirstName() + " " + getLastName();
+    }
+
+    public PatientProfile getPatientProfile() {
+        return patientProfile;
+    }
+
+    public void setPatientProfile(PatientProfile patientProfile) {
+        this.patientProfile = patientProfile;
     }
 }

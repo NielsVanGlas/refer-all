@@ -2,16 +2,19 @@ package com.niels.referall.service.impl;
 
 import com.niels.referall.config.exception.BaseException;
 import com.niels.referall.config.exception.ValidationException;
+import com.niels.referall.dto.doctorProfile.CreateDoctorProfileDto;
 import com.niels.referall.dto.userAccount.CreateUserAccountDto;
 import com.niels.referall.dto.userAccount.ShowUserAccountDto;
 import com.niels.referall.dto.userAccount.UpdateUserAccountDto;
 import com.niels.referall.entity.Address;
 import com.niels.referall.entity.DoctorProfile;
+import com.niels.referall.entity.PatientProfile;
 import com.niels.referall.entity.UserAccount;
 import com.niels.referall.factory.UserAccountFactory;
 import com.niels.referall.repository.UserAccountRepository;
 import com.niels.referall.service.AddressService;
 import com.niels.referall.service.DoctorProfileService;
+import com.niels.referall.service.PatientProfileService;
 import com.niels.referall.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +44,9 @@ public class UserAccountServiceImpl implements UserAccountService {
     private DoctorProfileService doctorProfileService;
 
     @Autowired
+    private PatientProfileService patientProfileService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -63,10 +69,17 @@ public class UserAccountServiceImpl implements UserAccountService {
         Address home = createUserAccountDto.getHome() != null
                 ? addressService.getOrCreateAddress(createUserAccountDto.getHome())
                 : residence;
+        CreateDoctorProfileDto doctorProfileDto = createUserAccountDto.getDoctorProfile();
 
-        DoctorProfile doctorProfile = doctorProfileService.getOrCreateDoctorProfile(createUserAccountDto.getDoctorProfile());
+        PatientProfile patientProfile = patientProfileService.createPatientProfile(createUserAccountDto.getPatientProfile());
 
-        UserAccount userAccount = userAccountRepository.saveAndFlush(UserAccountFactory.createUserAccount(createUserAccountDto, residence, home, doctorProfile, passwordEncoder));
+        UserAccount userAccount;
+        if (doctorProfileDto != null) {
+            DoctorProfile doctorProfile = doctorProfileService.getOrCreateDoctorProfile(createUserAccountDto.getDoctorProfile());
+            userAccount = userAccountRepository.saveAndFlush(UserAccountFactory.createDoctorAccount(createUserAccountDto, residence, home, doctorProfile, patientProfile, passwordEncoder));
+        } else {
+            userAccount = userAccountRepository.saveAndFlush(UserAccountFactory.createPatientAccount(createUserAccountDto, residence, home, patientProfile, passwordEncoder));
+        }
         return userAccount.getId();
 
     }
@@ -96,13 +109,25 @@ public class UserAccountServiceImpl implements UserAccountService {
         Address home = updateUserAccountDto.getHome() != null
                 ? addressService.getOrUpdateAddress(updateUserAccountDto.getHome())
                 : residence;
-        return userAccountRepository.saveAndFlush(UserAccountFactory.updateUserAccount(optionalUserAccount.get(), updateUserAccountDto, residence, home, passwordEncoder)).getId();
+
+        UserAccount userAccount = optionalUserAccount.get();
+        DoctorProfile doctorProfile = userAccount.getDoctorProfile();
+        PatientProfile patientProfile = userAccount.getPatientProfile();
+
+        if (doctorProfile != null) {
+            doctorProfile = doctorProfileService.updateDoctorSpecializations(doctorProfile.getLicenseNumber(), updateUserAccountDto.getSpecializations());
+        }
+
+        patientProfile = patientProfileService.updatePatientProfile(patientProfile, updateUserAccountDto.getPatientProfile());
+
+        return userAccountRepository.saveAndFlush(UserAccountFactory.updateUserAccount(optionalUserAccount.get(), updateUserAccountDto, residence, home, patientProfile, doctorProfile, passwordEncoder)).getId();
     }
 
     @Override
     public void deleteUserAccount(UUID authenticatedUser) throws BaseException {
         UserAccount userAccount = userAccountRepository.findById(authenticatedUser).orElseThrow(() -> new BaseException(ERR_404_01, HttpStatus.NOT_FOUND));
         doctorProfileService.deleteDoctorProfile(userAccount.getDoctorProfile().getId());
+        patientProfileService.deletePatientProfile(userAccount.getPatientProfile().getId());
         userAccountRepository.deleteById(userAccount.getId());
     }
 

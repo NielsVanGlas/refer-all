@@ -1,7 +1,11 @@
 package com.niels.referall.dto.userAccount;
 
 import com.niels.referall.dto.address.UpdateAddressDto;
+import com.niels.referall.dto.patientProfile.UpdatePatientProfileDto;
+import com.niels.referall.dto.specialization.UpdateSpecializationDto;
 import com.niels.referall.enumerate.DocumentType;
+
+import java.util.List;
 
 public class UpdateUserAccountDto {
 
@@ -25,20 +29,17 @@ public class UpdateUserAccountDto {
     private DocumentType documentType;
     private String documentId;
 
+    // Patient Profile
+    private UpdatePatientProfileDto patientProfile;
+
+    // Specializations
+    private List<UpdateSpecializationDto> specializations;
+
     // Constructors
     public UpdateUserAccountDto() {
     }
 
-    public UpdateUserAccountDto(String password, String email, String mobile, boolean marketingConsensus, DocumentType documentType, String documentId) {
-        this.password = password;
-        this.email = email;
-        this.mobile = mobile;
-        this.marketingConsensus = marketingConsensus;
-        this.documentType = documentType;
-        this.documentId = documentId;
-    }
-
-    public UpdateUserAccountDto(String password, String email, String mobile, UpdateAddressDto residence, UpdateAddressDto home, boolean marketingConsensus, DocumentType documentType, String documentId) {
+    public UpdateUserAccountDto(String password, String email, String mobile, UpdateAddressDto residence, UpdateAddressDto home, boolean marketingConsensus, DocumentType documentType, String documentId, UpdatePatientProfileDto patientProfile, List<UpdateSpecializationDto> specializations) {
         this.password = password;
         this.email = email;
         this.mobile = mobile;
@@ -47,6 +48,8 @@ public class UpdateUserAccountDto {
         this.marketingConsensus = marketingConsensus;
         this.documentType = documentType;
         this.documentId = documentId;
+        this.patientProfile = patientProfile;
+        this.specializations = specializations;
     }
 
     // Getters and Setters
@@ -114,4 +117,19 @@ public class UpdateUserAccountDto {
         this.documentId = documentId;
     }
 
+    public UpdatePatientProfileDto getPatientProfile() {
+        return patientProfile;
+    }
+
+    public void setPatientProfile(UpdatePatientProfileDto patientProfile) {
+        this.patientProfile = patientProfile;
+    }
+
+    public List<UpdateSpecializationDto> getSpecializations() {
+        return specializations;
+    }
+
+    public void setSpecializations(List<UpdateSpecializationDto> specializations) {
+        this.specializations = specializations;
+    }
 }

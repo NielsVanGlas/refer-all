@@ -13,4 +13,8 @@ public interface DoctorProfileRepository extends JpaRepository<DoctorProfile, UU
 
     @Query(value = "SELECT dp FROM DoctorProfile dp WHERE dp.licenseNumber = ?1")
     Optional<DoctorProfile> findIfExist(String licenseNumber);
+
+    @Query(value = "SELECT dp FROM DoctorProfile dp WHERE dp.licenseNumber = ?1")
+    DoctorProfile findByLicenseNumber(String licenseNumber);
+
 }

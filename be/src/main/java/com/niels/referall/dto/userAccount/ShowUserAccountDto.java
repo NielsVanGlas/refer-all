@@ -2,13 +2,14 @@ package com.niels.referall.dto.userAccount;
 
 import com.niels.referall.dto.address.ShowAddressDto;
 import com.niels.referall.dto.doctorProfile.ShowDoctorProfileDto;
+import com.niels.referall.dto.patientProfile.ShowPatientProfileDto;
 import com.niels.referall.entity.Address;
-import com.niels.referall.entity.DoctorProfile;
+import com.niels.referall.entity.PatientProfile;
 import com.niels.referall.enumerate.DocumentType;
 import com.niels.referall.enumerate.Gender;
 import com.niels.referall.enumerate.Role;
 import com.niels.referall.factory.AddressFactory;
-import com.niels.referall.factory.DoctorProfileFactory;
+import com.niels.referall.factory.PatientProfileFactory;
 
 import java.time.LocalDate;
 
@@ -49,30 +50,14 @@ public class ShowUserAccountDto {
     // Doctor Profile
     private ShowDoctorProfileDto doctorProfile;
 
+    // Patient Profile
+    private ShowPatientProfileDto patientProfile;
+
     // Constructors
     public ShowUserAccountDto() {
     }
 
-    public ShowUserAccountDto(boolean enabled, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId) {
-        this.enabled = enabled;
-        this.role = role;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.bornDate = bornDate;
-        this.birthCity = birthCity;
-        this.birthProvinceCode = birthProvinceCode;
-        this.birthZipCode = birthZipCode;
-        this.taxCode = taxCode;
-        this.email = email;
-        this.mobile = mobile;
-        this.marketingConsensus = marketingConsensus;
-        this.serviceTermsAndConditions = serviceTermsAndConditions;
-        this.documentType = documentType;
-        this.documentId = documentId;
-    }
-
-    public ShowUserAccountDto(boolean enabled, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, Address residence, Address home, DoctorProfile doctorProfile) {
+    public ShowUserAccountDto(boolean enabled, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, Address residence, Address home, PatientProfile patientProfile) {
         this.enabled = enabled;
         this.role = role;
         this.firstName = firstName;
@@ -91,10 +76,32 @@ public class ShowUserAccountDto {
         this.documentId = documentId;
         this.residence = AddressFactory.showAddressDto(residence);
         this.home = AddressFactory.showAddressDto(home);
-        this.doctorProfile = DoctorProfileFactory.showDoctorProfileDto(doctorProfile);
+        this.patientProfile = PatientProfileFactory.showPatientProfileDto(patientProfile);
     }
 
-    public ShowUserAccountDto(boolean enabled, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, ShowAddressDto residence, ShowAddressDto home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, ShowDoctorProfileDto doctorProfile) {
+    public ShowUserAccountDto(boolean enabled, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, ShowAddressDto residence, ShowAddressDto home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, ShowPatientProfileDto patientProfile) {
+        this.enabled = enabled;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.bornDate = bornDate;
+        this.birthCity = birthCity;
+        this.birthProvinceCode = birthProvinceCode;
+        this.birthZipCode = birthZipCode;
+        this.taxCode = taxCode;
+        this.email = email;
+        this.mobile = mobile;
+        this.residence = residence;
+        this.home = home;
+        this.marketingConsensus = marketingConsensus;
+        this.serviceTermsAndConditions = serviceTermsAndConditions;
+        this.documentType = documentType;
+        this.documentId = documentId;
+        this.patientProfile = patientProfile;
+    }
+
+    public ShowUserAccountDto(boolean enabled, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, ShowAddressDto residence, ShowAddressDto home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, ShowDoctorProfileDto doctorProfile, ShowPatientProfileDto patientProfile) {
         this.enabled = enabled;
         this.role = role;
         this.firstName = firstName;
@@ -114,6 +121,7 @@ public class ShowUserAccountDto {
         this.documentType = documentType;
         this.documentId = documentId;
         this.doctorProfile = doctorProfile;
+        this.patientProfile = patientProfile;
     }
 
     // Getters and Setters
@@ -261,4 +269,19 @@ public class ShowUserAccountDto {
         this.documentId = documentId;
     }
 
+    public ShowDoctorProfileDto getDoctorProfile() {
+        return doctorProfile;
+    }
+
+    public void setDoctorProfile(ShowDoctorProfileDto doctorProfile) {
+        this.doctorProfile = doctorProfile;
+    }
+
+    public ShowPatientProfileDto getPatientProfile() {
+        return patientProfile;
+    }
+
+    public void setPatientProfile(ShowPatientProfileDto patientProfile) {
+        this.patientProfile = patientProfile;
+    }
 }

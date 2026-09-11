@@ -96,13 +96,13 @@ public class UserAccountServiceImpl implements UserAccountService {
         Address home = updateUserAccountDto.getHome() != null
                 ? addressService.getOrUpdateAddress(updateUserAccountDto.getHome())
                 : residence;
-        DoctorProfile doctorProfile = doctorProfileService.getOrUpdateDoctorProfile(updateUserAccountDto.getDoctorProfile());
-        return userAccountRepository.saveAndFlush(UserAccountFactory.updateUserAccount(optionalUserAccount.get(), updateUserAccountDto, residence, home, doctorProfile, passwordEncoder)).getId();
+        return userAccountRepository.saveAndFlush(UserAccountFactory.updateUserAccount(optionalUserAccount.get(), updateUserAccountDto, residence, home, passwordEncoder)).getId();
     }
 
     @Override
     public void deleteUserAccount(UUID authenticatedUser) throws BaseException {
         UserAccount userAccount = userAccountRepository.findById(authenticatedUser).orElseThrow(() -> new BaseException(ERR_404_01, HttpStatus.NOT_FOUND));
+        doctorProfileService.deleteDoctorProfile(userAccount.getDoctorProfile().getId());
         userAccountRepository.deleteById(userAccount.getId());
     }
 

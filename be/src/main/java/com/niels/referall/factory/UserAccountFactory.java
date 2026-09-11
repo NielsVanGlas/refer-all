@@ -64,7 +64,7 @@ public class UserAccountFactory {
 
     }
 
-    public static UserAccount updateUserAccount(UserAccount entity, UpdateUserAccountDto dto, Address residence, Address home, DoctorProfile doctorProfile, PasswordEncoder passwordEncoder) {
+    public static UserAccount updateUserAccount(UserAccount entity, UpdateUserAccountDto dto, Address residence, Address home, PasswordEncoder passwordEncoder) {
         if (dto.getPassword() != null ){
             entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
@@ -75,7 +75,6 @@ public class UserAccountFactory {
         entity.setMarketingConsensus(dto.isMarketingConsensus());
         entity.setDocumentType(dto.getDocumentType());
         entity.setDocumentId(dto.getDocumentId());
-        entity.setDoctorProfile(doctorProfile);
         return entity;
     }
 }

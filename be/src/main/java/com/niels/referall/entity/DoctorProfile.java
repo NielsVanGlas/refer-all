@@ -1,6 +1,7 @@
 package com.niels.referall.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.niels.referall.entity.extra.CommonEntity;
 import com.niels.referall.util.Encryptor;
 import jakarta.persistence.*;
@@ -22,7 +23,7 @@ public class DoctorProfile extends CommonEntity {
             joinColumns = @JoinColumn(name = "doctor_id"),
             inverseJoinColumns = @JoinColumn(name = "specialization_id")
     )
-    @JsonBackReference
+    @JsonManagedReference
     private List<Specialization> specializations;
 
     public DoctorProfile() {

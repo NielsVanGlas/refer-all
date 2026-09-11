@@ -1,7 +1,6 @@
 package com.niels.referall.dto.userAccount;
 
 import com.niels.referall.dto.address.UpdateAddressDto;
-import com.niels.referall.dto.doctorProfile.UpdateDoctorProfileDto;
 import com.niels.referall.enumerate.DocumentType;
 
 public class UpdateUserAccountDto {
@@ -26,24 +25,20 @@ public class UpdateUserAccountDto {
     private DocumentType documentType;
     private String documentId;
 
-    // Doctor Profile
-    private UpdateDoctorProfileDto doctorProfile;
-
     // Constructors
     public UpdateUserAccountDto() {
     }
 
-    public UpdateUserAccountDto(String password, String email, String mobile, boolean marketingConsensus, DocumentType documentType, String documentId, UpdateDoctorProfileDto doctorProfile) {
+    public UpdateUserAccountDto(String password, String email, String mobile, boolean marketingConsensus, DocumentType documentType, String documentId) {
         this.password = password;
         this.email = email;
         this.mobile = mobile;
         this.marketingConsensus = marketingConsensus;
         this.documentType = documentType;
         this.documentId = documentId;
-        this.doctorProfile = doctorProfile;
     }
 
-    public UpdateUserAccountDto(String password, String email, String mobile, UpdateAddressDto residence, UpdateAddressDto home, boolean marketingConsensus, DocumentType documentType, String documentId, UpdateDoctorProfileDto doctorProfile) {
+    public UpdateUserAccountDto(String password, String email, String mobile, UpdateAddressDto residence, UpdateAddressDto home, boolean marketingConsensus, DocumentType documentType, String documentId) {
         this.password = password;
         this.email = email;
         this.mobile = mobile;
@@ -52,7 +47,6 @@ public class UpdateUserAccountDto {
         this.marketingConsensus = marketingConsensus;
         this.documentType = documentType;
         this.documentId = documentId;
-        this.doctorProfile = doctorProfile;
     }
 
     // Getters and Setters
@@ -120,11 +114,4 @@ public class UpdateUserAccountDto {
         this.documentId = documentId;
     }
 
-    public UpdateDoctorProfileDto getDoctorProfile() {
-        return doctorProfile;
-    }
-
-    public void setDoctorProfile(UpdateDoctorProfileDto doctorProfile) {
-        this.doctorProfile = doctorProfile;
-    }
 }

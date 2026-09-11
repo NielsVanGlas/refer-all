@@ -1,0 +1,40 @@
+app:
+  jwt:
+    access: 31536000000
+    refresh: 86400000
+    otp: 300000
+    secret: q12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNB
+  symmetric:
+    secret: oiuyrnf7584hduseanfi4837dirs945rf8edi85<òzx,9u7t6rerftu54aoiuyrnf7584hduseanfi4837dirs945rf8edi85<òzx,9u7t6rerftu54aoiuyrnf7584hduseanfi4837dirs945rf8edi85<òzx,9u7t6rerftu54aoiuyrnf7584hduseanfi4837dirs945rf8edi85<òzx,9u7t6rerftu54aoiuyrnf7584hduseanfi4837
+    salt: 1234567890qwerty'13'poiuyt0987654321
+
+spring:
+  jpa:
+    generate-ddl: false
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: public
+        format_sql: true
+  datasource:
+    jdbcUrl: jdbc:postgresql://localhost:5432/referall-master?autoReconnect=true&useSSL=false
+    username: postgres
+    password: u7ZgMGBvWLsG9JKhxw
+  devtools:
+    add-properties: false
+
+logging:
+  level:
+    org:
+      springframework:
+        core:
+          env=DEBUG:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

@@ -10,10 +10,10 @@ import java.util.List;
 
 public class DoctorProfileFactory {
 
-    public static DoctorProfile createDoctorProfile(CreateDoctorProfileDto dto, List<Specialization> specifications, DoctorProfileRepository doctorProfileRepository) {
+    public static DoctorProfile createDoctorProfile(CreateDoctorProfileDto dto, List<Specialization> specializations, DoctorProfileRepository doctorProfileRepository) {
         return doctorProfileRepository.saveAndFlush(new DoctorProfile(
                 dto.getLicenseNumber(),
-                specifications
+                specializations
         ));
     }
 

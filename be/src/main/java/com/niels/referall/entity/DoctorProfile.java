@@ -1,6 +1,5 @@
 package com.niels.referall.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.niels.referall.entity.extra.CommonEntity;
 import com.niels.referall.util.Encryptor;

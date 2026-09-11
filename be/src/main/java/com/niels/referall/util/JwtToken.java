@@ -18,7 +18,7 @@ import java.time.chrono.ChronoLocalDate;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.niels.referall.util.Constant.ERR_0009;
+import static com.niels.referall.util.Constant.ERR_404_01;
 
 @Component
 public class JwtToken {
@@ -41,7 +41,7 @@ public class JwtToken {
     public String generateAccessToken(UserAccount user) {
         return Jwts.builder()
                 .setSubject(user.getId().toString())
-                .setIssuer("HomeBanking")
+                .setIssuer("Referall")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION_ACCESS))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
@@ -52,7 +52,7 @@ public class JwtToken {
     public String generateRefreshToken(UserAccount user) {
         return Jwts.builder()
                 .setSubject(user.getId().toString())
-                .setIssuer("HomeBanking-REFRESH")
+                .setIssuer("Referall-REFRESH")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION_REFRESH))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
@@ -63,7 +63,7 @@ public class JwtToken {
     public String generateOtpToken(UserAccount user) {
         return Jwts.builder()
                 .setSubject(user.getId().toString())
-                .setIssuer("HomeBanking-OTP")
+                .setIssuer("Referall-OTP")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION_OTP))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
@@ -72,7 +72,7 @@ public class JwtToken {
     }
 
     public String getUsernameFromToken(String token) throws BaseException {
-        return userAccountService.findById(getUserIdFromToken(token)).orElseThrow(() -> new BaseException(ERR_0009, HttpStatus.NOT_FOUND)).getUsername();
+        return userAccountService.findById(getUserIdFromToken(token)).orElseThrow(() -> new BaseException(ERR_404_01, HttpStatus.NOT_FOUND)).getUsername();
     }
 
     public UUID getUserIdFromToken(String token) {

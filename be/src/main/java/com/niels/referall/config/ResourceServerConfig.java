@@ -61,7 +61,11 @@ public class ResourceServerConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/auth/**").permitAll()
-
+                                .requestMatchers(HttpMethod.GET, "/user", "/login").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers(HttpMethod.GET, "/errors").hasAnyRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/register").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/user").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers(HttpMethod.DELETE, "/user").hasAnyRole("ADMIN", "USER")
                                 .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

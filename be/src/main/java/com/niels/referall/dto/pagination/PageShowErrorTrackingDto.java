@@ -9,9 +9,9 @@ public class PageShowErrorTrackingDto extends PageDto {
 
     private List<ShowErrorTracking> item;
 
-    public PageShowErrorTrackingDto(List<ShowErrorTracking> showTransactionDto, int currentPage, long totalItem, int totalPage) {
+    public PageShowErrorTrackingDto(List<ShowErrorTracking> showErrorTrackingDto, int currentPage, long totalItem, int totalPage) {
         super(currentPage, totalItem, totalPage);
-        this.item = showTransactionDto;
+        this.item = showErrorTrackingDto;
     }
 
     @JsonProperty("item")

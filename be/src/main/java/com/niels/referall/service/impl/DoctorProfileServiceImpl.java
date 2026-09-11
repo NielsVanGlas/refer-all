@@ -30,11 +30,11 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
     @Override
     public DoctorProfile getOrCreateDoctorProfile(CreateDoctorProfileDto dto) throws ValidationException {
         Optional<DoctorProfile> optionalDoctorProfile = doctorProfileRepository.findIfExist(dto.getLicenseNumber());
-        List<Specialization> specifications = specializationService.getOrCreateSpecifications(dto.getSpecializations());
+        List<Specialization> specializations = specializationService.getOrCreateSpecializations(dto.getSpecializations());
         if (optionalDoctorProfile.isPresent()) {
             throw new ValidationException(ERR_400_04, HttpStatus.BAD_REQUEST);
         }
-        return DoctorProfileFactory.createDoctorProfile(dto, specifications, doctorProfileRepository);
+        return DoctorProfileFactory.createDoctorProfile(dto, specializations, doctorProfileRepository);
     }
 
     @Override

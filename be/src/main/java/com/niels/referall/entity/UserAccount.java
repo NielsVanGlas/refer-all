@@ -10,7 +10,6 @@ import com.niels.referall.enumerate.converter.GenderConverter;
 import com.niels.referall.enumerate.converter.RoleConverter;
 import com.niels.referall.util.Encryptor;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;

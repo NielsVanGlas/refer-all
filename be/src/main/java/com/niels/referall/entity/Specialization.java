@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.niels.referall.entity.extra.CommonEntity;
 import com.niels.referall.util.Encryptor;
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +18,8 @@ public class Specialization extends CommonEntity {
 
     // Doctor Profile
     @ManyToMany(mappedBy = "specializations", fetch = FetchType.LAZY)
-    private DoctorProfile doctorProfile;
+    @JsonBackReference
+    private List<DoctorProfile> doctorProfiles;
 
     public Specialization() {
     }
@@ -28,15 +28,15 @@ public class Specialization extends CommonEntity {
         this.specialization = specialization;
     }
 
-    public Specialization(String specialization, DoctorProfile doctorProfile) {
+    public Specialization(String specialization, List<DoctorProfile> doctorProfiles) {
         this.specialization = specialization;
-        this.doctorProfile = doctorProfile;
+        this.doctorProfiles = doctorProfiles;
     }
 
-    public Specialization(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, String specialization, DoctorProfile doctorProfile) {
+    public Specialization(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, String specialization, List<DoctorProfile> doctorProfiles) {
         super(id, createdAt, updatedAt);
         this.specialization = specialization;
-        this.doctorProfile = doctorProfile;
+        this.doctorProfiles = doctorProfiles;
     }
 
     public String getSpecialization() {
@@ -47,12 +47,12 @@ public class Specialization extends CommonEntity {
         this.specialization = specialization;
     }
 
-    public DoctorProfile getDoctorProfile() {
-        return doctorProfile;
+    public List<DoctorProfile> getDoctorProfiles() {
+        return doctorProfiles;
     }
 
-    public void setDoctorProfile(DoctorProfile doctorProfile) {
-        this.doctorProfile = doctorProfile;
+    public void setDoctorProfiles(List<DoctorProfile> doctorProfiles) {
+        this.doctorProfiles = doctorProfiles;
     }
 
 }

@@ -1,0 +1,165 @@
+@startuml
+' =====================================================
+' ER Diagram - Sistema Gestione Referti Medici
+' =====================================================
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam dpi 100
+skinparam nodesep 40
+skinparam ranksep 40
+
+title ER - Gestione Referti Medici
+
+' ======================
+' UTENTI E PROFILI
+' ======================
+entity "user_account" <<@Entity>> {
+  * id : VARCHAR(36) <<PK>>
+  --
+  enabled : BOOLEAN
+  password : TEXT
+  role : VARCHAR
+  first_name : TEXT <<encrypted>>
+  last_name : TEXT <<encrypted>>
+  gender : VARCHAR
+  born_date : DATE
+  birth_city : TEXT <<encrypted>>
+  birth_province_code : TEXT <<encrypted>>
+  birth_zip_code : VARCHAR
+  tax_code : TEXT <<encrypted,unique>>
+  email : TEXT <<encrypted,unique>>
+  mobile : TEXT <<encrypted>>
+  marketing_consensus : BOOLEAN
+  service_terms_and_conditions : BOOLEAN
+  document_type : VARCHAR
+  document_id : TEXT <<encrypted>>
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "address" <<@Entity>> {
+  * id : VARCHAR(36) <<PK>>
+  --
+  address : TEXT <<encrypted>>
+  city : TEXT <<encrypted>>
+  zip_code : TEXT <<encrypted>>
+  province_code : TEXT <<encrypted>>
+  country_code : TEXT <<encrypted>>
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "patient_profile" <<@Entity>> {
+  * id : VARCHAR(36) <<PK>>
+  --
+  blood_type : VARCHAR
+  allergies : TEXT <<encrypted>>
+  chronic_conditions : TEXT <<encrypted>>
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "doctor_profile" <<@Entity>> {
+  * id : VARCHAR(36) <<PK>>
+  --
+  license_number : TEXT <<encrypted,unique>>
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "specialization" <<@Entity>> {
+  * id : VARCHAR(36) <<PK>>
+  --
+  specialization : TEXT <<encrypted,unique>>
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+' ======================
+' REFERTO
+' ======================
+entity "medical_report" <<@Entity>> {
+  * id : VARCHAR(36) <<PK>>
+  --
+  patient_id : VARCHAR(36) <<FK>>
+  doctor_id : VARCHAR(36) <<FK>>
+  status : VARCHAR
+  title : TEXT
+  received_at : TIMESTAMP
+  file_name : TEXT
+  mime_type : VARCHAR
+  file_size : BIGINT
+  file_content : BYTEA
+  sha256 : VARCHAR
+  notes : TEXT
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "deleted_medical_report_archive" <<@Entity>> {
+  * id : VARCHAR(36) <<PK>>
+  --
+  patient_id : VARCHAR(36) <<FK>>
+  doctor_id : VARCHAR(36) <<FK>>
+  type : VARCHAR
+  status : VARCHAR
+  title : TEXT
+  received_at : TIMESTAMP
+  file_name : TEXT
+  mime_type : VARCHAR
+  file_size : BIGINT
+  file_content : BYTEA
+  sha256 : VARCHAR
+  notes : TEXT
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+' ======================
+' AUDIT & TRACKING
+' ======================
+entity "report_access_log" <<@Entity>> {
+  * id : VARCHAR(36) <<PK>>
+  --
+  user_account_id : VARCHAR(36) <<FK>>
+  action : VARCHAR
+  ip_address : VARCHAR
+  report_id : VARCHAR(36)
+  is_archived : BOOLEAN
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "error_tracking" <<@Entity>> {
+  * id : VARCHAR(36) <<PK>>
+  --
+  error_message : TEXT
+  status : VARCHAR
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+' ======================
+' RELAZIONI
+' ======================
+user_account }o--|| address : residence
+user_account }o--|| address : home
+
+user_account ||--|| patient_profile : patient_id → id
+user_account ||--o| doctor_profile : doctor_id → id
+
+doctor_profile }o--o{ specialization : doctor_specialization
+
+medical_report }o--|| user_account : patient
+medical_report }o--o| user_account : doctor
+
+deleted_medical_report_archive }o--|| user_account : patient
+deleted_medical_report_archive }o--o| user_account : doctor
+
+report_access_log }o--|| user_account : user_account
+
+' Forza error_tracking a destra (non in alto)
+error_tracking -[hidden]right- specialization
+
+@enduml

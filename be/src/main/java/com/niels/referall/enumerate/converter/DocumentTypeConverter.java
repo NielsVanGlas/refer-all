@@ -9,7 +9,7 @@ public class DocumentTypeConverter implements AttributeConverter<DocumentType, S
 
     @Override
     public String convertToDatabaseColumn(DocumentType val) {
-        return val==null?null:val.getValue();
+        return val == null ? null : val.getValue();
     }
 
     @Override

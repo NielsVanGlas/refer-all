@@ -57,7 +57,7 @@ public class AppConfig {
     @Bean
     public ApplicationRunner initializer(UserAccountRepository userAccountRepository) {
         return (args) -> {
-            Encryptor cypher=new Encryptor(SECRET,SALT);
+            Encryptor cypher = new Encryptor(SECRET, SALT);
         };
     }
 }

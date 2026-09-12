@@ -28,13 +28,6 @@ import java.util.UUID;
 public class RequestFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(RequestFilter.class);
-
-    @Autowired
-    private UserAccountService userAccountService;
-
-    @Autowired
-    private JwtParser jwtParser;
-
     // Define routes to skip JWT validation
     private static final List<String> SKIP_JWT_PATHS = Arrays.asList(
             "/auth/**",
@@ -43,6 +36,10 @@ public class RequestFilter extends OncePerRequestFilter {
             "/swagger-ui.html",
             "/register"
     );
+    @Autowired
+    private UserAccountService userAccountService;
+    @Autowired
+    private JwtParser jwtParser;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
@@ -71,7 +68,7 @@ public class RequestFilter extends OncePerRequestFilter {
             Claims claims = jwtParser.parseClaimsJws(jwtToken).getBody();
             String subject = claims.getSubject();
             logger.info("JWT Claims subject: {}", subject);
-            UUID userAccountId  = UUID.fromString(subject);
+            UUID userAccountId = UUID.fromString(subject);
             String userId = userAccountId.toString();
 
             if (SecurityContextHolder.getContext().getAuthentication() != null) {
@@ -80,7 +77,7 @@ public class RequestFilter extends OncePerRequestFilter {
             }
             UserDetails userDetails = userAccountService.loadUserByUsername(userId);
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
+                    userDetails, null, userDetails.getAuthorities());
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authToken);
             logger.info("Authentication set for user: {}", userId);

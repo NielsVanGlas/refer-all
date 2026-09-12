@@ -137,7 +137,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserDetails loadUserByUsername (String name) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         Optional<UserAccount> optionalUserAccount = UUID_REGEX.matcher(name).matches()
                 ? userAccountRepository.findById(UUID.fromString(name))
                 : userAccountRepository.findByEmail(name);

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ErrorTrackingRepository  extends JpaRepository<ErrorTracking, UUID> {
+public interface ErrorTrackingRepository extends JpaRepository<ErrorTracking, UUID> {
 
     @Query(value = "SELECT new com.niels.referall.dto.error.ShowErrorTracking(e.errorMessage, e.status, e.createdAt) FROM ErrorTracking e")
     Page<ShowErrorTracking> findAllErrors(Pageable pagination);

@@ -41,7 +41,7 @@ public class AuthenticationController {
     @Operation(description = "Authenticate a User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Authentication completed", content =
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = AuthenticationResponseDto.class))
+            @Content(mediaType = "application/json", schema = @Schema(implementation = AuthenticationResponseDto.class))
             ),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ValidationException.class))

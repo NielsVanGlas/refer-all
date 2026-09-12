@@ -14,11 +14,7 @@ public enum BloodType {
     private final String value;
 
     BloodType(String value) {
-    this.value = value;
-}
-
-    public String getValue() {
-        return value;
+        this.value = value;
     }
 
     public static BloodType fromValue(String value) {
@@ -34,6 +30,10 @@ public enum BloodType {
             default -> throw new IllegalArgumentException("Value [" + value
                     + "] not supported.");
         };
+    }
+
+    public String getValue() {
+        return value;
     }
 
 }

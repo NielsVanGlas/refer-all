@@ -11,10 +11,6 @@ public enum DocumentType {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public static DocumentType fromValue(String value) {
         return switch (value) {
             case "PASSPORT" -> DocumentType.PASSPORT;
@@ -22,6 +18,10 @@ public enum DocumentType {
             default -> throw new IllegalArgumentException("Value [" + value
                     + "] not supported.");
         };
+    }
+
+    public String getValue() {
+        return value;
     }
 
 }

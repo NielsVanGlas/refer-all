@@ -9,7 +9,7 @@ public class BloodTypeConverter implements AttributeConverter<BloodType, String>
 
     @Override
     public String convertToDatabaseColumn(BloodType val) {
-        return val==null?null:val.getValue();
+        return val == null ? null : val.getValue();
     }
 
     @Override

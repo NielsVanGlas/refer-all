@@ -1,22 +1,20 @@
 package com.niels.referall.enumerate;
 
-public enum Gender {
+public enum ReportStatus {
 
-    M("M"),
-    F("F"),
-    NA("NA");
+    NEW("New"),
+    READ("Read");
 
     private final String value;
 
-    Gender(String value) {
+    ReportStatus(String value) {
         this.value = value;
     }
 
-    public static Gender fromValue(String value) {
+    public static ReportStatus fromValue(String value) {
         return switch (value) {
-            case "M" -> Gender.M;
-            case "F" -> Gender.F;
-            case "NA" -> Gender.NA;
+            case "New" -> ReportStatus.NEW;
+            case "Read" -> ReportStatus.READ;
             default -> throw new IllegalArgumentException("Value [" + value
                     + "] not supported.");
         };

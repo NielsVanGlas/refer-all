@@ -5,7 +5,7 @@ import com.niels.referall.dto.specialization.ShowSpecializationDto;
 
 import java.util.List;
 
-public class PageShowSpecializationDto extends PageDto{
+public class PageShowSpecializationDto extends PageDto {
 
     private List<ShowSpecializationDto> item;
 

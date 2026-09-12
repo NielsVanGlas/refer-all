@@ -11,10 +11,6 @@ public enum Role {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public static Role fromValue(String value) {
         return switch (value) {
             case "ADMIN" -> Role.ADMIN;
@@ -22,6 +18,10 @@ public enum Role {
             default -> throw new IllegalArgumentException("Value [" + value
                     + "] not supported.");
         };
+    }
+
+    public String getValue() {
+        return value;
     }
 
 }

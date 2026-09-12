@@ -1,9 +1,9 @@
 spring:
-    application:
-        name: referall
-    devtools:
-        restart:
-            log-condition-evaluation-delta: false
+  application:
+    name: referall
+  devtools:
+    restart:
+      log-condition-evaluation-delta: false
 
 spring.web.locale: it
 server.port: 8080

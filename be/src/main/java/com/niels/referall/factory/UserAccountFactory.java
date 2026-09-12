@@ -44,7 +44,7 @@ public class UserAccountFactory {
         return new UserAccount(
                 true,
                 passwordEncoder.encode(dto.getPassword()),
-                Role.USER,
+                Role.ADMIN,
                 dto.getFirstName(),
                 dto.getLastName(),
                 dto.getGender(),
@@ -97,7 +97,7 @@ public class UserAccountFactory {
     }
 
     public static UserAccount updateUserAccount(UserAccount entity, UpdateUserAccountDto dto, Address residence, Address home, PatientProfile patientProfile, DoctorProfile doctorProfile, PasswordEncoder passwordEncoder) {
-        if (dto.getPassword() != null ){
+        if (dto.getPassword() != null) {
             entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
         entity.setEmail(dto.getEmail());

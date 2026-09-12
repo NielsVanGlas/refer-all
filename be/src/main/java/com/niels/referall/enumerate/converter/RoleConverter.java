@@ -9,7 +9,7 @@ public class RoleConverter implements AttributeConverter<Role, String> {
 
     @Override
     public String convertToDatabaseColumn(Role val) {
-        return val==null?null:val.getValue();
+        return val == null ? null : val.getValue();
     }
 
     @Override

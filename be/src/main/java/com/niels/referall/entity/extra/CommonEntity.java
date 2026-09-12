@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
-public abstract class CommonEntity  implements Serializable {
+public abstract class CommonEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

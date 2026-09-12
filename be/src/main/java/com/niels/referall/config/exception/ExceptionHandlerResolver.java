@@ -20,10 +20,9 @@ import java.time.format.DateTimeParseException;
 @ControllerAdvice
 public class ExceptionHandlerResolver {
 
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerResolver.class);
     @Autowired
     private ErrorTrackingRepository errorTrackingRepository;
-
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerResolver.class);
 
     @ExceptionHandler({ValidationException.class})
     public ResponseEntity<ErrorMessageDto> handleAll(ValidationException ex) {
@@ -61,5 +60,5 @@ public class ExceptionHandlerResolver {
         logger.error(ex.getMessage(), ex);
         return new ResponseEntity<ErrorMessageDto>(new ErrorMessageDto(ex.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
 }

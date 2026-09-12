@@ -1,0 +1,128 @@
+@startuml
+' =====================================================
+' UML Class Diagram - Sistema Gestione Referti Medici
+' =====================================================
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam dpi 80
+skinparam nodesep 30
+skinparam ranksep 30
+
+title UML - Gestione Referti Medici
+
+abstract class CommonEntity <<@MappedSuperclass>> {
+  +UUID id [PK]
+  +LocalDateTime createdAt
+  +LocalDateTime updatedAt
+}
+
+class Address <<@Entity>> {
+  +String address <<encrypted>>
+  +String city <<encrypted>>
+  +String zipCode <<encrypted>>
+  +String provinceCode <<encrypted>>
+  +String countryCode <<encrypted>>
+}
+
+class UserAccount <<@Entity>> {
+  +boolean enabled
+  +String password
+  +Role role
+  +String firstName <<encrypted>>
+  +String lastName <<encrypted>>
+  +Gender gender
+  +LocalDate bornDate
+  +String birthCity <<encrypted>>
+  +String birthProvinceCode <<encrypted>>
+  +String birthZipCode
+  +String taxCode <<encrypted, unique>>
+  +String email <<encrypted, unique>>
+  +String mobile <<encrypted>>
+  +boolean marketingConsensus
+  +boolean serviceTermsAndConditions
+  +DocumentType documentType
+  +String documentId <<encrypted>>
+}
+
+class PatientProfile <<@Entity>> {
+  +BloodType bloodType
+  +String allergies <<encrypted>>
+  +String chronicConditions <<encrypted>>
+}
+
+class DoctorProfile <<@Entity>> {
+  +String licenseNumber <<encrypted, unique>>
+}
+
+class Specialization <<@Entity>> {
+  +String specialization <<encrypted, unique>>
+}
+
+class MedicalReport <<@Entity>> {
+  +ReportStatus status
+  +String title
+  +LocalDateTime receivedAt
+  +String fileName
+  +String mimeType
+  +Long fileSize
+  +byte[] fileContent
+  +String sha256
+  +String notes
+}
+
+class DeletedMedicalReportArchive <<@Entity>> {
+  +String type
+  +ReportStatus status
+  +String title
+  +LocalDateTime receivedAt
+  +String fileName
+  +String mimeType
+  +Long fileSize
+  +byte[] fileContent
+  +String sha256
+  +String notes
+}
+
+class ReportAccessLog <<@Entity>> {
+  +ActionType action
+  +String ipAddress
+  +UUID reportId
+  +Boolean isArchived
+}
+
+class ErrorTracking <<@Entity>> {
+  +String errorMessage
+  +HttpStatus status
+}
+
+' ==============
+' Relationships
+' ==============
+
+CommonEntity <|-- Address
+CommonEntity <|-- UserAccount
+CommonEntity <|-- PatientProfile
+CommonEntity <|-- DoctorProfile
+CommonEntity <|-- Specialization
+CommonEntity <|-- MedicalReport
+CommonEntity <|-- DeletedMedicalReportArchive
+CommonEntity <|-- ReportAccessLog
+CommonEntity <|-- ErrorTracking
+
+UserAccount "1" --> "1" Address : residence >
+UserAccount "1" --> "1" Address : home >
+UserAccount "1" --> "1" PatientProfile : patientProfile
+UserAccount "1" --> "0..1" DoctorProfile : doctorProfile
+
+DoctorProfile "0..*" --> "0..*" Specialization : specializations
+
+MedicalReport "0..*" --> "1" UserAccount : patient
+MedicalReport "0..*" --> "0..1" UserAccount : doctor
+
+DeletedMedicalReportArchive "0..*" --> "1" UserAccount : patient
+DeletedMedicalReportArchive "0..*" --> "0..1" UserAccount : doctor
+
+ReportAccessLog "0..*" --> "1" UserAccount : userAccount
+
+@enduml

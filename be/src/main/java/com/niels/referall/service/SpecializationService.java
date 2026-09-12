@@ -8,15 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface SpecializationService {
 
     List<Specialization> updateSpecialization(List<UpdateSpecializationDto> dtos);
 
     List<Specialization> getOrCreateSpecializations(List<CreateSpecializationDto> dtos);
-
-    UUID createSpecialization(CreateSpecializationDto dto);
 
     Page<ShowSpecializationDto> getSpecializations(Pageable pagination);
 }

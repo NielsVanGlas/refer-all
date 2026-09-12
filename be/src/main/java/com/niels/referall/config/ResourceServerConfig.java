@@ -61,10 +61,11 @@ public class ResourceServerConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/report", "/specialization").hasAnyRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/report").hasAnyRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/register").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/errors", "/log").hasAnyRole("ADMIN")
-                                .requestMatchers(HttpMethod.GET, "/login", "/report", "/specialization").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers(HttpMethod.GET, "/login", "/report").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers(HttpMethod.GET, "/specialization").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/user").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers(HttpMethod.DELETE, "/report").hasAnyRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/user").hasAnyRole("ADMIN", "USER")

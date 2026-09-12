@@ -113,7 +113,7 @@ public class MedicalReportController {
     }
 
     // Read One
-    @Operation(description = "Get an User Account")
+    @Operation(description = "Get a Medical Report")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ShowMedicalReportFullDto.class))
@@ -144,8 +144,8 @@ public class MedicalReportController {
         return new ResponseEntity<ShowMedicalReportFullDto>(record, HttpStatus.OK);
     }
 
-    // Read One
-    @Operation(description = "Get an User Account")
+    // Download
+    @Operation(description = "Download a Medical Report")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ShowMedicalReportFullDto.class))

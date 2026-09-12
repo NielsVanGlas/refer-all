@@ -3,7 +3,6 @@ package com.niels.referall.controller;
 import com.niels.referall.config.exception.BaseException;
 import com.niels.referall.config.exception.ValidationException;
 import com.niels.referall.dto.pagination.PageShowSpecializationDto;
-import com.niels.referall.dto.specialization.CreateSpecializationDto;
 import com.niels.referall.dto.specialization.ShowSpecializationDto;
 import com.niels.referall.service.SpecializationService;
 import com.niels.referall.util.Common;
@@ -29,35 +28,6 @@ public class SpecializationController {
     private SpecializationService specializationService;
 
     // CRUD
-    // Create
-    @Operation(description = "Create a new Specialization")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = UUID.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ValidationException.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = BaseException.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "Forbidden", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = BaseException.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "Not Found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = BaseException.class))
-            }),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = BaseException.class))
-            })
-    })
-    @PostMapping()
-    public ResponseEntity<UUID> createRecord(
-            @RequestBody CreateSpecializationDto createSpecializationDto
-    ) throws Exception {
-        UUID id = specializationService.createSpecialization(createSpecializationDto);
-        return new ResponseEntity<>(id, HttpStatus.CREATED);
-    }
 
     // Read All
     @Operation(description = "Get all Specializations")

@@ -56,7 +56,7 @@ public class MedicalReportServiceImpl implements MedicalReportService {
                 if (file == null || file.isEmpty()) {
                     throw new ValidationException(ERR_400_05, HttpStatus.BAD_REQUEST);
                 }
-                Optional<UserAccount> optionalPatientAccount = userAccountRepository.findById(createMedicalReportDto.getPatient());
+                Optional<UserAccount> optionalPatientAccount = userAccountRepository.findByTaxCode(createMedicalReportDto.getPatient());
                 if (optionalPatientAccount.isPresent()) {
                     UUID medicalReportId = MedicalReportFactory.createMedicalReport(createMedicalReportDto, file, loggedAccount, optionalPatientAccount.get(), medicalReportRepository).getId();
                     ReportAccessLogFactory.createReportAccessLog(medicalReportId, loggedAccount, clientIp, ActionType.UPLOAD, reportAccessLogRepository);
@@ -114,7 +114,9 @@ public class MedicalReportServiceImpl implements MedicalReportService {
             if (optionalMedicalReport.isPresent() && optionalMedicalReport.get().getDoctor().getId().equals(authenticatedUser)) {
                 UUID archivedMedicalReportId = deletedMedicalReportArchiveRepository.saveAndFlush(new DeletedMedicalReportArchive(optionalMedicalReport.get())).getId();
                 ReportAccessLogFactory.createReportAccessLog(archivedMedicalReportId, optionalLoggedAccount.get(), clientIp, ActionType.DELETE, reportAccessLogRepository);
-                medicalReportRepository.deleteByPatientAndDoctor(medicalReportId, authenticatedUser);
+                if (medicalReportRepository.selectByIdAndDoctor(medicalReportId, authenticatedUser).isPresent()) {
+                    medicalReportRepository.deleteById(medicalReportId);
+                }
             }
         }
     }
@@ -131,10 +133,10 @@ public class MedicalReportServiceImpl implements MedicalReportService {
             } else {
                 medicalReport = medicalReportRepository.findByPatientId(medicalReportId, authenticatedUser);
                 ReportAccessLogFactory.createReportAccessLog(loggedAccount.getId(), loggedAccount, clientIp, ActionType.DOWNLOAD, reportAccessLogRepository);
+                medicalReport.setReceivedAt(LocalDateTime.now());
+                medicalReport.setStatus(ReportStatus.READ);
+                medicalReportRepository.saveAndFlush(medicalReport);
             }
-            medicalReport.setReceivedAt(LocalDateTime.now());
-            medicalReport.setStatus(ReportStatus.READ);
-            medicalReportRepository.saveAndFlush(medicalReport);
             return new ShowMedicalReportFileDto(medicalReport);
         } else {
             throw new ValidationException(ERR_401_01, HttpStatus.UNAUTHORIZED);

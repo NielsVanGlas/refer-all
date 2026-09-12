@@ -78,16 +78,14 @@ public class UserAccount extends CommonEntity implements UserDetails {
     private String mobile;
 
     // Residence
-    @ManyToOne(fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "residence_id", nullable = false)
     @JsonBackReference
     private Address residence;
 
     // Domicile
-    @ManyToOne(fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "home_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "home_id")
     @JsonBackReference
     private Address home;
 

@@ -2,6 +2,7 @@ package com.niels.referall.service.impl;
 
 import com.niels.referall.config.exception.BaseException;
 import com.niels.referall.config.exception.ValidationException;
+import com.niels.referall.dto.address.CreateAddressDto;
 import com.niels.referall.dto.doctorProfile.CreateDoctorProfileDto;
 import com.niels.referall.dto.userAccount.CreateUserAccountDto;
 import com.niels.referall.dto.userAccount.ShowUserAccountDto;
@@ -16,6 +17,7 @@ import com.niels.referall.service.AddressService;
 import com.niels.referall.service.DoctorProfileService;
 import com.niels.referall.service.PatientProfileService;
 import com.niels.referall.service.UserAccountService;
+import com.niels.referall.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +30,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 import static com.niels.referall.util.Constant.*;
+import static org.apache.coyote.http11.Constants.a;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
@@ -65,10 +68,8 @@ public class UserAccountServiceImpl implements UserAccountService {
         }
 
         Address residence = addressService.getOrCreateAddress(createUserAccountDto.getResidence());
+        Address home = addressService.getOrCreateAddress(createUserAccountDto.getHome());
 
-        Address home = createUserAccountDto.getHome() != null
-                ? addressService.getOrCreateAddress(createUserAccountDto.getHome())
-                : residence;
         CreateDoctorProfileDto doctorProfileDto = createUserAccountDto.getDoctorProfile();
 
         PatientProfile patientProfile = patientProfileService.createPatientProfile(createUserAccountDto.getPatientProfile());
@@ -101,7 +102,8 @@ public class UserAccountServiceImpl implements UserAccountService {
             throw new ValidationException(ERR_400_02, HttpStatus.BAD_REQUEST);
         }
 
-        if (userAccountRepository.findByDocumentTypeAndDocumentId(updateUserAccountDto.getDocumentType(), updateUserAccountDto.getDocumentId()).isPresent()) {
+        Optional<UserAccount> userAccountDocument = userAccountRepository.findByDocumentTypeAndDocumentId(updateUserAccountDto.getDocumentType(), updateUserAccountDto.getDocumentId());
+        if (userAccountDocument.isPresent() && !userAccountDocument.get().getId().equals(authenticatedUser)) {
             throw new ValidationException(ERR_400_03, HttpStatus.BAD_REQUEST);
         }
 
@@ -126,8 +128,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public void deleteUserAccount(UUID authenticatedUser) throws BaseException {
         UserAccount userAccount = userAccountRepository.findById(authenticatedUser).orElseThrow(() -> new BaseException(ERR_404_01, HttpStatus.NOT_FOUND));
-        doctorProfileService.deleteDoctorProfile(userAccount.getDoctorProfile().getId());
-        patientProfileService.deletePatientProfile(userAccount.getPatientProfile().getId());
         userAccountRepository.deleteById(userAccount.getId());
     }
 

@@ -82,13 +82,15 @@ public class UserAccountFactory {
                 entity.getEmail(),
                 entity.getMobile(),
                 AddressFactory.showAddressDto(entity.getResidence()),
-                AddressFactory.showAddressDto(entity.getHome()),
                 entity.isMarketingConsensus(),
                 entity.isServiceTermsAndConditions(),
                 entity.getDocumentType(),
                 entity.getDocumentId(),
                 PatientProfileFactory.showPatientProfileDto(entity.getPatientProfile())
         );
+        if (entity.getHome() != null)  {
+            showUserAccount.setHome(AddressFactory.showAddressDto(entity.getHome()));
+        }
         if (entity.getDoctorProfile() != null) {
             showUserAccount.setDoctorProfile(DoctorProfileFactory.showDoctorProfileDto(entity.getDoctorProfile()));
         }

@@ -79,7 +79,7 @@ public class ShowUserAccountDto {
         this.patientProfile = PatientProfileFactory.showPatientProfileDto(patientProfile);
     }
 
-    public ShowUserAccountDto(boolean enabled, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, ShowAddressDto residence, ShowAddressDto home, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, ShowPatientProfileDto patientProfile) {
+    public ShowUserAccountDto(boolean enabled, Role role, String firstName, String lastName, Gender gender, LocalDate bornDate, String birthCity, String birthProvinceCode, String birthZipCode, String taxCode, String email, String mobile, ShowAddressDto residence, boolean marketingConsensus, boolean serviceTermsAndConditions, DocumentType documentType, String documentId, ShowPatientProfileDto patientProfile) {
         this.enabled = enabled;
         this.role = role;
         this.firstName = firstName;
@@ -93,7 +93,6 @@ public class ShowUserAccountDto {
         this.email = email;
         this.mobile = mobile;
         this.residence = residence;
-        this.home = home;
         this.marketingConsensus = marketingConsensus;
         this.serviceTermsAndConditions = serviceTermsAndConditions;
         this.documentType = documentType;

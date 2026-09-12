@@ -16,7 +16,7 @@ public class DoctorProfile extends CommonEntity {
     @Convert(converter = Encryptor.class)
     private String licenseNumber;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "doctor_specialization",
             joinColumns = @JoinColumn(name = "doctor_id"),

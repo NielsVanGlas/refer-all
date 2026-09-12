@@ -1,8 +1,12 @@
 package com.niels.referall.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.niels.referall.entity.extra.CommonEntity;
 import com.niels.referall.enumerate.ActionType;
-import jakarta.persistence.Entity;
+import com.niels.referall.enumerate.converter.ActionTypeConverter;
+import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,14 +14,23 @@ import java.util.UUID;
 @Entity
 public class ReportAccessLog extends CommonEntity {
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private UserAccount userAccount;
 
+    @Column
+    @Convert(converter = ActionTypeConverter.class)
     private ActionType action;
 
+    @Column(nullable = false)
     private String ipAddress;
 
+    @Column(nullable = false)
     private UUID reportId;
 
+    @Column(nullable = false)
     private Boolean isArchived = false;
 
     public ReportAccessLog() {

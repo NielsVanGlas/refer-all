@@ -102,7 +102,6 @@ entity "deleted_medical_report_archive" <<@Entity>> {
   --
   patient_id : VARCHAR(36) <<FK>>
   doctor_id : VARCHAR(36) <<FK>>
-  type : VARCHAR
   status : VARCHAR
   title : TEXT
   received_at : TIMESTAMP

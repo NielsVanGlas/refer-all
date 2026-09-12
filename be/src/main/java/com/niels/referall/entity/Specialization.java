@@ -17,7 +17,7 @@ public class Specialization extends CommonEntity {
     private String specialization;
 
     // Doctor Profile
-    @ManyToMany(mappedBy = "specializations", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "specializations", fetch = FetchType.EAGER)
     @JsonBackReference
     private List<DoctorProfile> doctorProfiles;
 

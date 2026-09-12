@@ -1,8 +1,12 @@
 package com.niels.referall.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.niels.referall.entity.extra.CommonEntity;
 import com.niels.referall.enumerate.ReportStatus;
-import jakarta.persistence.Entity;
+import com.niels.referall.enumerate.converter.ReportStatusConverted;
+import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,51 +14,52 @@ import java.util.UUID;
 @Entity
 public class DeletedMedicalReportArchive extends CommonEntity {
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "patient_id", nullable = false)
+    @JsonBackReference
     private UserAccount patient;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "doctor_id", nullable = false)
+    @JsonBackReference
     private UserAccount doctor;
 
-    private String type;
-
+    @Column
+    @Convert(converter = ReportStatusConverted.class)
     private ReportStatus status;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column
     private LocalDateTime receivedAt;
 
+    @Column(nullable = false)
     private String fileName;
 
+    @Column(nullable = false)
     private String mimeType;
 
+    @Column(nullable = false)
     private Long fileSize;
 
+    @Column(nullable = false)
     private byte[] fileContent;
 
+    @Column(nullable = false)
     private String sha256;
 
+    @Column
     private String notes;
 
     public DeletedMedicalReportArchive() {
     }
 
-    public DeletedMedicalReportArchive(UserAccount patient, UserAccount doctor, String type, ReportStatus status, String title, String fileName, String mimeType, Long fileSize, byte[] fileContent, String sha256, String notes) {
+    public DeletedMedicalReportArchive(UserAccount patient, UserAccount doctor, ReportStatus status, String title, LocalDateTime receivedAt, String fileName, String mimeType, Long fileSize, byte[] fileContent, String sha256, String notes) {
         this.patient = patient;
         this.doctor = doctor;
-        this.type = type;
-        this.status = status;
-        this.title = title;
-        this.fileName = fileName;
-        this.mimeType = mimeType;
-        this.fileSize = fileSize;
-        this.fileContent = fileContent;
-        this.sha256 = sha256;
-        this.notes = notes;
-    }
-
-    public DeletedMedicalReportArchive(UserAccount patient, UserAccount doctor, String type, ReportStatus status, String title, LocalDateTime receivedAt, String fileName, String mimeType, Long fileSize, byte[] fileContent, String sha256, String notes) {
-        this.patient = patient;
-        this.doctor = doctor;
-        this.type = type;
         this.status = status;
         this.title = title;
         this.receivedAt = receivedAt;
@@ -66,11 +71,10 @@ public class DeletedMedicalReportArchive extends CommonEntity {
         this.notes = notes;
     }
 
-    public DeletedMedicalReportArchive(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, UserAccount patient, UserAccount doctor, String type, ReportStatus status, String title, LocalDateTime receivedAt, String fileName, String mimeType, Long fileSize, byte[] fileContent, String sha256, String notes) {
+    public DeletedMedicalReportArchive(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, UserAccount patient, UserAccount doctor, ReportStatus status, String title, LocalDateTime receivedAt, String fileName, String mimeType, Long fileSize, byte[] fileContent, String sha256, String notes) {
         super(id, createdAt, updatedAt);
         this.patient = patient;
         this.doctor = doctor;
-        this.type = type;
         this.status = status;
         this.title = title;
         this.receivedAt = receivedAt;
@@ -110,14 +114,6 @@ public class DeletedMedicalReportArchive extends CommonEntity {
 
     public void setDoctor(UserAccount doctor) {
         this.doctor = doctor;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public ReportStatus getStatus() {

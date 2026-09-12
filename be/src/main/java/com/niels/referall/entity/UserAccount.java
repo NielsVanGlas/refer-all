@@ -108,14 +108,14 @@ public class UserAccount extends CommonEntity implements UserDetails {
     private String documentId;
 
     // Patient Profile
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "patient_id", referencedColumnName = "id", nullable = false)
     @NotNull
     private PatientProfile patientProfile;
 
     // Doctor Profile
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     private DoctorProfile doctorProfile;

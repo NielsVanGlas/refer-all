@@ -20,5 +20,5 @@ public interface MedicalReportService {
 
     void deleteMedicalReport(UUID authenticatedUser, UUID medicalReportId, String clientIp);
 
-    ShowMedicalReportFileDto getMedicalReportForDownload(UUID medicalReportId, UUID authenticatedUser, String clientIp) throws ValidationException;
+    ShowMedicalReportFileDto getMedicalReportForDownload(UUID id, UUID authenticatedUser, String remoteAddr) throws ValidationException;
 }

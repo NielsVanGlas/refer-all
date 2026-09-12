@@ -1,8 +1,12 @@
 package com.niels.referall.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.niels.referall.entity.extra.CommonEntity;
 import com.niels.referall.enumerate.ReportStatus;
-import jakarta.persistence.Entity;
+import com.niels.referall.enumerate.converter.ReportStatusConverted;
+import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,26 +14,44 @@ import java.util.UUID;
 @Entity
 public class MedicalReport extends CommonEntity {
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "patient_id", nullable = false)
+    @JsonBackReference
     private UserAccount patient;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "doctor_id", nullable = false)
+    @JsonBackReference
     private UserAccount doctor;
 
+    @Column
+    @Convert(converter = ReportStatusConverted.class)
     private ReportStatus status;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column
     private LocalDateTime receivedAt;
 
+    @Column(nullable = false)
     private String fileName;
 
+    @Column(nullable = false)
     private String mimeType;
 
+    @Column(nullable = false)
     private Long fileSize;
 
+    @Column(nullable = false)
     private byte[] fileContent;
 
+    @Column(nullable = false)
     private String sha256;
 
+    @Column
     private String notes;
 
     public MedicalReport() {

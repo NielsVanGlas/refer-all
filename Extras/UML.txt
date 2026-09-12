@@ -72,7 +72,6 @@ class MedicalReport <<@Entity>> {
 }
 
 class DeletedMedicalReportArchive <<@Entity>> {
-  +String type
   +ReportStatus status
   +String title
   +LocalDateTime receivedAt

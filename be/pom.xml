@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.niels</groupId>
     <artifactId>referall</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <name>referall</name>
     <description>Referrals for All</description>
     <url/>

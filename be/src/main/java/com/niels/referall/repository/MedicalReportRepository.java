@@ -13,6 +13,7 @@ import java.util.UUID;
 @Repository
 public interface MedicalReportRepository extends JpaRepository<MedicalReport, UUID> {
 
+    @Query("DELETE FROM MedicalReport mr WHERE mr.patient.id = ?1 AND mr.doctor.id = ?2")
     void deleteByPatientAndDoctor(UUID patientId, UUID doctorId);
 
     @Query(value = "SELECT new com.niels.referall.dto.medicalReport.ShowMedicalReportDto(mr.patient.firstName, mr.patient.lastName, mr.doctor.firstName, mr.doctor.lastName, mr.status, mr.title, mr.receivedAt, mr.id, mr.notes) FROM MedicalReport mr WHERE mr.doctor.id=?1")

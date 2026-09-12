@@ -6,7 +6,7 @@ spring:
       log-condition-evaluation-delta: false
 
 spring.web.locale: it
-server.port: 8080
+server.port: 8053
 
 spring.main.banner-mode: off
 spring.servlet.multipart.max-file-size: 4096KB

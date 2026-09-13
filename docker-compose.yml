@@ -1,0 +1,29 @@
+services:
+  be:
+    build:
+      context: ./be
+      dockerfile: Dockerfile
+    container_name: referall-be
+    ports:
+      - "8053:8053"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_JDBCURL: jdbc:postgresql://host.docker.internal:5432/referall-master?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: u7ZgMGBvWLsG9JKhxw
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  fe:
+    build:
+      context: ./fe
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_BASE_URL: http://localhost:8053
+    container_name: referall-fe
+    ports:
+      - "3000:80"
+    depends_on:
+      - be
+    restart: unless-stopped

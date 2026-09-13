@@ -137,6 +137,8 @@ public class MedicalReportServiceImpl implements MedicalReportService {
             } else {
                 medicalReport = medicalReportRepository.findByPatientId(medicalReportId, authenticatedUser);
                 ReportAccessLogFactory.createReportAccessLog(loggedAccount.getId(), loggedAccount, clientIp, ActionType.DOWNLOAD, reportAccessLogRepository);
+            }
+            if (medicalReport.getPatient().getId().equals(authenticatedUser) || medicalReport.getPatient().getId().equals(medicalReport.getDoctor().getId())) {
                 medicalReport.setReceivedAt(LocalDateTime.now());
                 medicalReport.setStatus(ReportStatus.READ);
                 medicalReportRepository.saveAndFlush(medicalReport);

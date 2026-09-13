@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.niels.referall.entity.extra.CommonEntity;
 import com.niels.referall.enumerate.ReportStatus;
 import com.niels.referall.enumerate.converter.ReportStatusConverted;
+import com.niels.referall.util.Encryptor;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -46,6 +47,7 @@ public class MedicalReport extends CommonEntity {
     private Long fileSize;
 
     @Column(nullable = false)
+    @Convert(converter = Encryptor.class)
     private byte[] fileContent;
 
     @Column(nullable = false)

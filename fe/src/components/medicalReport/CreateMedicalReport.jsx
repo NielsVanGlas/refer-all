@@ -22,12 +22,23 @@ const CreateMedicalReport = ({ open, onClose, onSuccess }) => {
     };
 
     const handleFileChange = (e) => {
-        setFile(e.target.files[0] || null);
+        const selected = e.target.files[0] || null;
+        if (selected && selected.size > 5 * 1024 * 1024) {
+            setError('Il file non può superare i 5MB');
+            setFile(null);
+            return;
+        }
+        setError('');
+        setFile(selected);
     };
 
     const handleSubmit = async () => {
         if (!formData.patient.trim() || !formData.title.trim() || !file) {
             setError('Codice fiscale paziente, titolo e file sono obbligatori');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            setError('Il file non può superare i 5MB');
             return;
         }
 

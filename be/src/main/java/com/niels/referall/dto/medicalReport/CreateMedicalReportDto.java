@@ -1,9 +1,5 @@
 package com.niels.referall.dto.medicalReport;
 
-import com.niels.referall.enumerate.ReportStatus;
-
-import java.util.UUID;
-
 public class CreateMedicalReportDto {
 
     private String patient;

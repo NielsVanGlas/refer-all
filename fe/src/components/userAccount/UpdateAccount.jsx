@@ -38,7 +38,6 @@ const UpdateAccount = ({ open, onClose, user }) => {
     });
 
     const [sameAsResidence, setSameAsResidence] = useState(true);
-    const [availableSpecializations, setAvailableSpecializations] = useState([]);
     const [selectedSpecializations, setSelectedSpecializations] = useState([]);
     const [newSpecialization, setNewSpecialization] = useState('');
     const [error, setError] = useState('');
@@ -89,14 +88,6 @@ const UpdateAccount = ({ open, onClose, user }) => {
             setSelectedSpecializations([]);
         }
     }, [user, open]);
-
-    useEffect(() => {
-        if (open && isDoctor) {
-            axiosInstance.get('/specialization')
-                .then(res => setAvailableSpecializations(res.data || []))
-                .catch(() => setAvailableSpecializations([]));
-        }
-    }, [open, isDoctor]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -305,28 +296,6 @@ const UpdateAccount = ({ open, onClose, user }) => {
                     {isDoctor && (
                         <Box sx={{ mt: 3, p: 2, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
                             <Typography variant="h6" gutterBottom>Specializzazioni</Typography>
-
-                            {availableSpecializations.length > 0 && (
-                                <FormControl fullWidth size="small" sx={{ mb: 2 }}>
-                                    <InputLabel>Aggiungi specializzazione esistente</InputLabel>
-                                    <Select
-                                        label="Aggiungi specializzazione esistente"
-                                        value=""
-                                        onChange={(e) => {
-                                            const val = e.target.value;
-                                            if (val && !selectedSpecializations.includes(val)) {
-                                                setSelectedSpecializations(prev => [...prev, val]);
-                                            }
-                                        }}
-                                    >
-                                        {availableSpecializations.map((s) => (
-                                            <MenuItem key={s.id || s.specialization} value={s.specialization}>
-                                                {s.specialization}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            )}
 
                             <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                                 <TextField

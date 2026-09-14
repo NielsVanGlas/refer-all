@@ -88,7 +88,7 @@ public class UserAccountFactory {
                 entity.getDocumentId(),
                 PatientProfileFactory.showPatientProfileDto(entity.getPatientProfile())
         );
-        if (entity.getHome() != null)  {
+        if (entity.getHome() != null) {
             showUserAccount.setHome(AddressFactory.showAddressDto(entity.getHome()));
         }
         if (entity.getDoctorProfile() != null) {

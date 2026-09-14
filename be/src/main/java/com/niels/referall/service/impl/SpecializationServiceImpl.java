@@ -1,14 +1,11 @@
 package com.niels.referall.service.impl;
 
 import com.niels.referall.dto.specialization.CreateSpecializationDto;
-import com.niels.referall.dto.specialization.ShowSpecializationDto;
 import com.niels.referall.dto.specialization.UpdateSpecializationDto;
 import com.niels.referall.entity.Specialization;
 import com.niels.referall.repository.SpecializationRepository;
 import com.niels.referall.service.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -47,11 +44,6 @@ public class SpecializationServiceImpl implements SpecializationService {
             specializations.add(specializationMap.containsKey(key) ? specializationMap.get(key) : specializationRepository.saveAndFlush(new Specialization(key)));
         });
         return specializations;
-    }
-
-    @Override
-    public Page<ShowSpecializationDto> getSpecializations(Pageable pagination) {
-        return specializationRepository.findAllSpecializations(pagination);
     }
 
 }

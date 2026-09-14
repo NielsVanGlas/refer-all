@@ -1,7 +1,5 @@
 package com.niels.referall.util;
 
-import com.niels.referall.dto.address.CreateAddressDto;
-import com.niels.referall.entity.Address;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

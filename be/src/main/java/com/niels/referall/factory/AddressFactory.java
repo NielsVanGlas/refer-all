@@ -4,7 +4,6 @@ import com.niels.referall.dto.address.CreateAddressDto;
 import com.niels.referall.dto.address.ShowAddressDto;
 import com.niels.referall.dto.address.UpdateAddressDto;
 import com.niels.referall.entity.Address;
-import com.niels.referall.repository.AddressRepository;
 
 public class AddressFactory {
 

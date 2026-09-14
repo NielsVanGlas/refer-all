@@ -1,10 +1,4 @@
 @echo off
-echo ################ Stop backend + frontend ################
+echo ######################### Stop #########################
 docker compose down
-
-echo #################### Stop  database ####################
-cd db
-docker compose down
-cd ..
-
 echo # Tutti i container fermati.                           #

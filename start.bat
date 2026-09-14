@@ -1,12 +1,7 @@
 @echo off
 setlocal
 
-echo #################### Avvio database ####################
-cd db
-docker compose up -d
-cd ..
-
-echo ############### Avvio backend + frontend ###############
+echo ######################## Avvio ########################
 docker compose up --build -d
 
 echo.

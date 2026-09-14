@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: u7ZgMGBvWLsG9JKhxw
-      POSTGRES_DB: referall-master
+      POSTGRES_DB: referall-test
     volumes:
       - .data:/var/lib/postgresql/data
       - ./config:/docker-entrypoint-initdb.d

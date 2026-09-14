@@ -7,10 +7,13 @@ services:
     ports:
       - "8053:8053"
     environment:
-      SPRING_PROFILES_ACTIVE: dev
+      SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_JDBCURL: jdbc:postgresql://host.docker.internal:5432/referall-master?autoReconnect=true&useSSL=false
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: u7ZgMGBvWLsG9JKhxw
+      JWT_SECRET: q12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNBq12WE34rT56Yu7I89O0paSDfgHJKlmNB
+      SYMMETRIC_SECRET: oiuyrnf7584hduseanfi4837dirs945rf8edi85<òzx,9u7t6rerftu54aoiuyrnf7584hduseanfi4837dirs945rf8edi85<òzx,9u7t6rerftu54aoiuyrnf7584hduseanfi4837dirs945rf8edi85<òzx,9u7t6rerftu54aoiuyrnf7584hduseanfi4837dirs945rf8edi85<òzx,9u7t6rerftu54aoiuyrnf7584hduseanfi4837
+      SYMMETRIC_SALT: 1234567890qwerty'13'poiuyt0987654321
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped

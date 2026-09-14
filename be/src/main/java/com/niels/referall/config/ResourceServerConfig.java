@@ -79,7 +79,7 @@ public class ResourceServerConfig {
     }
 
     @Bean
-    @Profile({"dev"})
+    @Profile({"dev", "prod"})
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("*"));

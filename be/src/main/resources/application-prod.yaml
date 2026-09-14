@@ -20,7 +20,7 @@ spring:
         default_schema: public
         format_sql: true
   datasource:
-    jdbcUrl: ${SPRING_DATASOURCE_MASTER_URL}
+    jdbcUrl: ${SPRING_DATASOURCE_JDBCURL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
   devtools:
